@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.30.0 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: mongo
+  name: mongo
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: mongo
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.30.0 (HEAD)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/reddish-default: "true"
+        io.kompose.service: mongo
+    spec:
+      containers:
+        - env:
+            - name: MONGO_INITDB_DATABASE
+              value: reddish
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              value: reddish
+            - name: MONGO_INITDB_ROOT_USERNAME
+              value: root
+          image: mongo
+          name: mongo
+          resources: {}
+      restartPolicy: Always
+status: {}
